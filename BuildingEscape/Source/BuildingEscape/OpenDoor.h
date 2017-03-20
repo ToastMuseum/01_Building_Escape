@@ -18,7 +18,9 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// add new methods to header file
 	void OpenDoor();
+	void CloseDoor();
 	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
@@ -26,13 +28,18 @@ public:
 private:
 	
 	//Working with Macros -jdeo
-	UPROPERTY(VisibleAnywhere) //Make variable visible in details panel but not editable
+	UPROPERTY(EditAnywhere) //Make variable visible in details panel but not editable
 	float OpenAngle = 90.0f;
 	
 	UPROPERTY(EditAnywhere) //Make variable visible in details panel and editable
 	ATriggerVolume* PressurePlate;
 
+	UPROPERTY(EditAnywhere)
+	float DoorCloseDelay = 1.0f;
 	
+	float LastDoorOpenTime;
+
 	AActor* ActorThatOpens; //Remember pawn inherits from actor -jdeo
+	AActor* Owner; //the owning door - jdeo
 	
 };

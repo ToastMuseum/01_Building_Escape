@@ -20,20 +20,23 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Get Owner Actor for door -jdeo
+	Owner = GetOwner();
+
 	// Grab the pawn from the world -jdeo
 	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 void UOpenDoor::OpenDoor()
 {
-	// Get Owner Actor for door -jdeo
-	AActor* Owner = GetOwner();
-
-	// Create a rotatorv-jdeo
-	FRotator NewRotation = FRotator(0.0f, -60.0f, 0.0f);
-
 	// Set the door rotation -jdeo
-	Owner->SetActorRotation(NewRotation);
+	Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.0f));
+}
+
+void UOpenDoor::CloseDoor()
+{
+	// Set the door rotation -jdeo
+	Owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
 }
 
 
@@ -46,6 +49,12 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 	// If the ActorThatOpens is in the volume -jdeo
 	if (PressurePlate->IsOverlappingActor(ActorThatOpens)) {
 		OpenDoor();
+		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+	}
+
+	//Check if its time to close the door
+	if (GetWorld()->GetTimeSeconds() > LastDoorOpenTime + DoorCloseDelay) {
+		CloseDoor();
 	}
 	
 	

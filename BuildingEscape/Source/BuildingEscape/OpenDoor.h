@@ -26,13 +26,13 @@ public:
 private:
 	
 	//Working with Macros -jdeo
-	UPROPERTY(VisibleAnywhere) 
+	UPROPERTY(VisibleAnywhere) //Make variable visible in details panel but not editable
 	float OpenAngle = 90.0f;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere) //Make variable visible in details panel and editable
 	ATriggerVolume* PressurePlate;
 
-	UPROPERTY(EditAnywhere)
+	
 	AActor* ActorThatOpens; //Remember pawn inherits from actor -jdeo
 	
 };

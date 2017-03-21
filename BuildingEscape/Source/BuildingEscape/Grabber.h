@@ -21,6 +21,11 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-		
+	
+private:
+
+	// How far ahead of the player we can reach [cm] - jdeo 
+	float Reach = 100.0f;
+
 	
 };

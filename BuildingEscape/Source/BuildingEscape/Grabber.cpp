@@ -41,10 +41,23 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 		OUT	PlayerViewPointRotation
 	);
 	// TODO: Log out to test -jdeo
-	UE_LOG(LogTemp, Warning, 
+	/*UE_LOG(LogTemp, Warning, 
 		TEXT("Location: %s  Rotation: %s"),
 		*PlayerViewPointLocation.ToString(),
 		*PlayerViewPointRotation.ToString()
+	);*/
+
+	//Draw a red trace in the world to visualize -jdeo
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector()*Reach;
+	DrawDebugLine(
+		GetWorld(),					//
+		PlayerViewPointLocation,	// LineStart
+		LineTraceEnd,				// LineEnd
+		FColor (255,0,0),			// Color of line
+		false,						// Line persistence (false = redrawn every frame)
+		0.0f,						// Lifetime
+		0.0f,						// Depth Priority
+		10.0f						// Line Thickness
 	);
 
 	// Ray-cast out to reach distance -jdeo

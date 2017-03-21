@@ -34,6 +34,7 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
 	// Get player view point this tick -jdeo
+
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
@@ -60,8 +61,31 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 		10.0f						// Line Thickness
 	);
 
-	// Ray-cast out to reach distance -jdeo
+	/// set up query parameters -jdeo
+	FCollisionQueryParams TraceParameters(
+		FName(TEXT("")),	
+		false,				// false uses simple collision (player collision view not visibility collision)
+		GetOwner()			// Actor to ignore (trace starts in center of actor so ignore actor and allow it to pass through it)
+	);
 
-	// See what we hit -jdeo
+	/// line-trace (a.k.a. Ray-cast) out to reach distance -jdeo
+	FHitResult Hit;
+	GetWorld()->LineTraceSingleByObjectType(
+		OUT Hit,					// hit result
+		PlayerViewPointLocation,	// line start vector
+		LineTraceEnd,				// line end vector
+		FCollisionObjectQueryParams	(ECollisionChannel::ECC_PhysicsBody),	// collision object query param
+		TraceParameters				// Default query params
+	);
+
+	/// See what we hit -jdeo
+	AActor* ActorHit = Hit.GetActor();
+	if (ActorHit) {
+		UE_LOG(LogTemp, Warning,
+			TEXT("LineTrace Hit: %s"),
+			*(ActorHit->GetName())
+		);
+	}
+
 }
 

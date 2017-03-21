@@ -20,7 +20,8 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	// report for duty - jdeo
+	UE_LOG(LogTemp, Warning, TEXT("Grabber reporting for duty!"));
 	
 }
 

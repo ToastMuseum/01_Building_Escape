@@ -13,7 +13,7 @@ class BUILDINGESCAPE_API UGrabber : public UActorComponent
 
 public:	
 	// Sets default values for this component's properties
-	UGrabber();
+	UGrabber(); //constructor -jdeo
 
 	// Called when the game starts
 	virtual void BeginPlay() override;

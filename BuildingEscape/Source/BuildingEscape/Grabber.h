@@ -29,13 +29,22 @@ private:
 
 	// -jdeo
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
-	// -jdeo
 	UInputComponent* InputComponent = nullptr;
 
-	// Ray-cast and grab what is in reach
+	//Find Attached physics
+	void FindPhysicsHandleComponent();
+
+	// Setup (assumed) attached input component  -jdeo
+	void SetupInputComponent();
+
+	// Return hit for first physics body within reach
+	const FHitResult GetFirstPhysicsBodyInReach();
+
+
+	// Ray-cast and grab what is in reach  -jdeo
 	void Grab();
 
-	// Ray-cast and Release what is in reach
+	// Ray-cast and Release what is in reach  -jdeo
 	void Release();
 
 

@@ -24,7 +24,19 @@ void UGrabber::BeginPlay()
 
 	// report for duty - jdeo
 	UE_LOG(LogTemp, Warning, TEXT("Grabber reporting for duty!"));
-	
+
+	// Look for attached physics handle:
+	//		GetOwner object of Grabber.cpp. Then find physics component on the object
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle) {
+		// Physics handle found
+	}
+	else {
+		// Log an error message
+		UE_LOG(LogTemp, Error, TEXT("%s is missing physics handle component"),
+			*(GetOwner()->GetName())
+		);
+	}
 }
 
 

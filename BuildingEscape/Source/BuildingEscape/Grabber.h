@@ -27,5 +27,6 @@ private:
 	// How far ahead of the player we can reach [cm] - jdeo 
 	float Reach = 100.0f;
 
-	
+	// -jdeo
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 };

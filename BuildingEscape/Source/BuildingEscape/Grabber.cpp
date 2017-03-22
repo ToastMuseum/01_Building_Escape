@@ -28,6 +28,8 @@ void UGrabber::BeginPlay()
 
 }
 
+
+
 // Look for attached physics handle  -jdeo
 void UGrabber::FindPhysicsHandleComponent() {
 	// GetOwner object of Grabber.cpp. Then find physics component on the object
@@ -75,6 +77,9 @@ void UGrabber::SetupInputComponent()
 	}
 }
 
+
+
+// LINE TRACE and see if we reach any actors with physics body collision channel set -jdeo
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
 
@@ -92,7 +97,7 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 	*PlayerViewPointRotation.ToString()
 	);*/
 
-	//Draw a red trace in the world to visualize -jdeo
+	//Endpoint of trace -jdeo
 	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector()*Reach;
 
 	/// set up query parameters -jdeo
@@ -125,6 +130,7 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 }
 
 
+
 void UGrabber::Grab() {
 	UE_LOG(LogTemp, Warning, TEXT("%s: Grab key Pressed"),
 		*(GetOwner()->GetName())
@@ -137,6 +143,7 @@ void UGrabber::Grab() {
 	// TODO: attach physics handle -jdeo
 }
 
+
 void UGrabber::Release() {
 	UE_LOG(LogTemp, Warning, TEXT("%s: Grab key Released"),
 		*(GetOwner()->GetName())
@@ -144,6 +151,8 @@ void UGrabber::Release() {
 
 	// TODO: attach physics handle -jdeo
 }
+
+
 
 
 // Called every frame
@@ -155,7 +164,36 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 		// move the object that we're holding  -jdeo
 
 
-	
+	//Draw red linetrace to show player reach -jdeo
+	DisplayDebugLineTrace();
 
 }
 
+
+// Show a line trace of where the player is looking -jdeo
+void UGrabber::DisplayDebugLineTrace()
+{
+	// Get player view point this tick -jdeo
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT	PlayerViewPointLocation,
+		OUT	PlayerViewPointRotation
+	);
+
+	//Draw a red trace in the world to visualize -jdeo
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector()*Reach;
+
+
+	DrawDebugLine(
+		GetWorld(),					//
+		PlayerViewPointLocation,	// LineStart
+		LineTraceEnd,				// LineEnd
+		FColor(255, 0, 0),			// Color of line
+		false,						// Line persistence (false = redrawn every frame)
+		0.0f,						// Lifetime
+		0.0f,						// Depth Priority
+		10.0f						// Line Thickness
+	);
+
+}

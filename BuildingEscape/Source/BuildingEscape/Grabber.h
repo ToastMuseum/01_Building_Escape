@@ -47,5 +47,6 @@ private:
 	// Ray-cast and Release what is in reach  -jdeo
 	void Release();
 
-
+	// Line trace of where the player is looking -jdeo
+	void DisplayDebugLineTrace();
 };

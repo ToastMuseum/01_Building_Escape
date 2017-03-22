@@ -126,7 +126,7 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 		);
 	}
 
-	return FHitResult();
+	return Hit;
 }
 
 
@@ -137,10 +137,20 @@ void UGrabber::Grab() {
 	);
 	
 	/// LINE TRACE and see if we reach any actors with physics body collision channel set -jdeo
-	GetFirstPhysicsBodyInReach();
+	auto HitResult = GetFirstPhysicsBodyInReach();
+	auto ComponentToGrab = HitResult.GetComponent();
+	auto ActorHit = HitResult.GetActor();
 
 	/// If we hit something then attach a physics handle -jdeo
-	// TODO: attach physics handle -jdeo
+	if (ActorHit) {
+		// attach physics handle -jdeo
+		PhysicsHandle->GrabComponentAtLocationWithRotation(
+			ComponentToGrab,
+			NAME_None,
+			ComponentToGrab->GetOwner()->GetActorLocation(),
+			ComponentToGrab->GetOwner()->GetActorRotation()
+		);
+	}
 }
 
 
@@ -149,7 +159,9 @@ void UGrabber::Release() {
 		*(GetOwner()->GetName())
 	);
 
-	// TODO: attach physics handle -jdeo
+	// TODO: release physics handle -jdeo
+	PhysicsHandle->ReleaseComponent();
+
 }
 
 
@@ -160,12 +172,34 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
+
+	// Get player view point this tick -jdeo
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT	PlayerViewPointLocation,
+		OUT	PlayerViewPointRotation
+	);
+	// TODO: Log out to test -jdeo
+	/*UE_LOG(LogTemp, Warning,
+	TEXT("Location: %s  Rotation: %s"),
+	*PlayerViewPointLocation.ToString(),
+	*PlayerViewPointRotation.ToString()
+	);*/
+
+	//Endpoint of trace -jdeo
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector()*Reach;
+
+
 	//TODO: if the physics handle is attached -jdeo
+	if (PhysicsHandle->GrabbedComponent) {
 		// move the object that we're holding  -jdeo
+		PhysicsHandle->SetTargetLocation(LineTraceEnd);
+	}
 
 
 	//Draw red linetrace to show player reach -jdeo
-	DisplayDebugLineTrace();
+	//DisplayDebugLineTrace();
 
 }
 

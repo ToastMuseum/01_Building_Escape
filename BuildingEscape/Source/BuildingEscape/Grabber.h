@@ -29,4 +29,10 @@ private:
 
 	// -jdeo
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	// -jdeo
+	UInputComponent* InputComponent = nullptr;
+
+	// Ray-cast and grab what is in reach
+	void Grab();
+
 };

@@ -59,6 +59,6 @@ BuildingEscape/Content/StarterContent/
 # Visual Studio Generated Files
 #==============================
 BuildingEscape/*vc.db
-BuildingEscape/.vs/BuildingEscape/v14/.suo
+BuildingEscape/BuildingEscape.VC.VC.opendb
 BuildingEscape/.vs/BuildingEscape/v14/.suo
 *.suo

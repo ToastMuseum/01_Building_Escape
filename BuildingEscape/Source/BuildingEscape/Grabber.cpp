@@ -52,6 +52,12 @@ void UGrabber::BeginPlay()
 			this,					// Object the action is operated on
 			&UGrabber::Grab			// Method Name on Object to be called
 			);
+		InputComponent->BindAction(
+			"Grab",					// Action Mapping Name
+			IE_Released,			// Input Event
+			this,					// Object the action is operated on
+			&UGrabber::Release		// Method Name on Object to be called
+		);
 
 	}
 	else {
@@ -63,7 +69,13 @@ void UGrabber::BeginPlay()
 }
 
 void UGrabber::Grab() {
-	UE_LOG(LogTemp, Warning, TEXT("%s: Grab Pressed"),
+	UE_LOG(LogTemp, Warning, TEXT("%s: Grab key Pressed"),
+		*(GetOwner()->GetName())
+	);
+}
+
+void UGrabber::Release() {
+	UE_LOG(LogTemp, Warning, TEXT("%s: Grab key Released"),
 		*(GetOwner()->GetName())
 	);
 }

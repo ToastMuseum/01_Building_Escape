@@ -37,7 +37,10 @@ void UOpenDoor::OpenDoor()
 {
 	if (!Owner) { return; }
 	// Set the door rotation -jdeo
-	Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.0f));
+	//Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.0f));
+	
+	// Affect the door opening within blueprint -jdeo
+	OnOpenRequest.Broadcast(); 
 }
 
 void UOpenDoor::CloseDoor()

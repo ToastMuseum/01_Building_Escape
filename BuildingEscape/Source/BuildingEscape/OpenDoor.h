@@ -39,7 +39,11 @@ private:
 	
 	float LastDoorOpenTime;
 
-	AActor* ActorThatOpens; //Remember pawn inherits from actor -jdeo
+	float MaxWeight = 30.0f;
+
 	AActor* Owner; //the owning door - jdeo
 	
+	// returns total mass in [kg]
+	float GetTotalMassOfActorsOnPlate();
+
 };

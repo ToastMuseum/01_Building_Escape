@@ -32,7 +32,7 @@ private:
 	float OpenAngle = 90.0f;
 	
 	UPROPERTY(EditAnywhere) //Make variable visible in details panel and editable
-	ATriggerVolume* PressurePlate;
+	ATriggerVolume* PressurePlate = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	float DoorCloseDelay = 1.0f;
@@ -41,7 +41,8 @@ private:
 
 	float MaxWeight = 30.0f;
 
-	AActor* Owner; //the owning door - jdeo
+	//the owning door - jdeo
+	AActor* Owner = nullptr; 
 	
 	// returns total mass in [kg]
 	float GetTotalMassOfActorsOnPlate();

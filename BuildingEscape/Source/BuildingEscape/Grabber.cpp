@@ -106,6 +106,8 @@ void UGrabber::Grab() {
 
 	/// If we hit something then attach a physics handle -jdeo
 	if (ActorHit) {
+
+		if (!PhysicsHandle) { return; }
 		// attach physics handle -jdeo
 		PhysicsHandle->GrabComponentAtLocationWithRotation(
 			ComponentToGrab,	
@@ -118,6 +120,8 @@ void UGrabber::Grab() {
 
 
 void UGrabber::Release() {
+
+	if (!PhysicsHandle) { return; }
 	// release physics handle -jdeo
 	PhysicsHandle->ReleaseComponent();
 }
@@ -130,6 +134,7 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
+	if (!PhysicsHandle) { return; }
 	//TODO: if the physics handle is attached -jdeo
 	if (PhysicsHandle->GrabbedComponent) {
 		// move the object that we're holding  -jdeo

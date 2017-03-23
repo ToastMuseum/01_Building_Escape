@@ -6,7 +6,7 @@
 #include "OpenDoor.generated.h"
 
 // Allowing blueprint functionality -jdeo
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDINGESCAPE_API UOpenDoor : public UActorComponent
@@ -20,32 +20,25 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	// add new methods to header file
-	void OpenDoor();
-	void CloseDoor();
 	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	// Allowing blueprint functionality -jdeo
 	UPROPERTY(BlueprintAssignable)
-	FOnOpenRequest OnOpenRequest;
+	FDoorEvent OnOpen;
+
+	UPROPERTY(BlueprintAssignable)
+	FDoorEvent OnClose;
+
 
 private:
-	
-	//Working with Macros -jdeo
-	UPROPERTY(EditAnywhere) //Make variable visible in details panel but not editable
-	float OpenAngle = 90.0f;
 	
 	UPROPERTY(EditAnywhere) //Make variable visible in details panel and editable
 	ATriggerVolume* PressurePlate = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	float DoorCloseDelay = 1.0f;
-	
-	float LastDoorOpenTime;
-
-	float MaxWeight = 30.0f;
+	float TriggerMass = 30.0f;
 
 	//the owning door - jdeo
 	AActor* Owner = nullptr; 

@@ -33,23 +33,6 @@ void UOpenDoor::BeginPlay()
 
 }
 
-void UOpenDoor::OpenDoor()
-{
-	if (!Owner) { return; }
-	// Set the door rotation -jdeo
-	//Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.0f));
-	
-	// Affect the door opening within blueprint -jdeo
-	OnOpenRequest.Broadcast(); 
-}
-
-void UOpenDoor::CloseDoor()
-{
-	if (!Owner) { return; }
-	// Set the door rotation -jdeo
-	Owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.0f));
-}
-
 
 // Called every frame
 void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
@@ -58,15 +41,15 @@ void UOpenDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompo
 
 	// Poll the Trigger Volume -jdeo
 	// If mass on plate exceeds maxWeight open door -jdeo
-	if (GetTotalMassOfActorsOnPlate() > MaxWeight){
-		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+	if (GetTotalMassOfActorsOnPlate() > TriggerMass){
+		// Trigger blueprint event -jdeo
+		OnOpen.Broadcast();
+	}
+	else {
+		// Trigger blueprint event -jdeo
+		OnClose.Broadcast();
 	}
 
-	//Check if its time to close the door
-	if (GetWorld()->GetTimeSeconds() > LastDoorOpenTime + DoorCloseDelay) {
-		CloseDoor();
-	}
 	
 	
 }

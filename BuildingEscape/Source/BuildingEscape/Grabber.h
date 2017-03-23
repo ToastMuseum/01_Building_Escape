@@ -22,6 +22,8 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	
+
+	
 private:
 
 	// How far ahead of the player we can reach [cm] - jdeo 
@@ -49,4 +51,10 @@ private:
 
 	// Line trace of where the player is looking -jdeo
 	void DisplayDebugLineTrace();
+
+	// Returns current start of reach line
+	FVector GetReachLineStart();
+
+	// Returns current end of reach line
+	FVector GetReachLineEnd();
 };
